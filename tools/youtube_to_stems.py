@@ -102,17 +102,22 @@ def separate_audio(audio_path, name):
                 logging.error(f"[ERROR] Demucs failed:\n{stderr.decode()}")
                 sys.exit(1)
 
+        vocals_dir = os.path.join("separated", "vocals")
+        no_vocals_dir = os.path.join("separated", "no_vocals")
+        os.makedirs(vocals_dir, exist_ok=True)
+        os.makedirs(no_vocals_dir, exist_ok=True)
+
         sep_folder = os.path.join("separated", "htdemucs", os.path.splitext(os.path.basename(audio_path))[0])
         vocals_path = os.path.join(sep_folder, "vocals.wav")
         no_vocals_path = os.path.join(sep_folder, "no_vocals.wav")
 
         if os.path.exists(vocals_path):
-            new_vocals_path = os.path.join(sep_folder, f"{name}_vocals.wav")
-            os.rename(vocals_path, new_vocals_path)
+            new_vocals_path = os.path.join(vocals_dir, f"{name}_vocals.wav")
+            os.replace(vocals_path, new_vocals_path)
             logging.info(f"✅ Vocals: {new_vocals_path}")
         if os.path.exists(no_vocals_path):
-            new_nv_path = os.path.join(sep_folder, f"{name}_no_vocals.wav")
-            os.rename(no_vocals_path, new_nv_path)
+            new_nv_path = os.path.join(no_vocals_dir, f"{name}_no_vocals.wav")
+            os.replace(no_vocals_path, new_nv_path)
             logging.info(f"✅ Accompaniment: {new_nv_path}")
     except Exception as e:
         logging.error(f"[ERROR] Demucs separation failed: {e}")
