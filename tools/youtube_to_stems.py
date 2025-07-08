@@ -107,9 +107,8 @@ def separate_audio(audio_path, name):
         os.makedirs(vocals_dir, exist_ok=True)
         os.makedirs(no_vocals_dir, exist_ok=True)
 
-        sep_folder = os.path.join("separated", "htdemucs", os.path.splitext(os.path.basename(audio_path))[0])
-        vocals_path = os.path.join(sep_folder, "vocals.wav")
-        no_vocals_path = os.path.join(sep_folder, "no_vocals.wav")
+        vocals_path = os.path.join(vocals_dir, os.path.splitext(os.path.basename(audio_path))[0], "vocals.wav")
+        no_vocals_path = os.path.join(no_vocals_dir, os.path.splitext(os.path.basename(audio_path))[0], "no_vocals.wav")
 
         if os.path.exists(vocals_path):
             new_vocals_path = os.path.join(vocals_dir, f"{name}_vocals.wav")
