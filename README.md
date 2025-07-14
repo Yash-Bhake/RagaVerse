@@ -19,8 +19,51 @@ under the tools folder-
 
 ## Requirements
 
+Ensure Python ≥3.8 is installed and added to PATH
+
+Mac OS
+
+1. install homebrew (if not already installed)
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+2. install ffmpeg
+
+```bash
+brew install ffmpeg
+```
+3. clone this repository
+```bash
+git clone https://github.com/Yash-Bhake/RagaVerse.git
+```
+4. create virtual environment 
+```bash
+python3 -m venv ragaverse_venv
+source ragaverse_venv/bin/activate
+```
+5. install dependencies
 ```bash 
-pip install yt-dlp librosa numpy matplotlib seaborn scikit-learn tqdm pydub
+pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl
+```
+
+Windows
+
+1. Download ffmpeg from https://ffmpeg.org/download.html
+2. Extract to `C:\ffmpeg`
+3. Add `C:\ffmpeg\bin` to your system environment variables -> path
+4. clone this repository
+```bash
+git clone https://github.com/Yash-Bhake/RagaVerse.git
+```
+5. create virtual environment (optional but recommended)
+```bash
+python -m venv ragaverse_venv
+ragaverse_venv\Scripts\activate
+```
+6. install dependencies
+```bash 
+pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl
 ```
 
 ## CLI tool
@@ -30,7 +73,8 @@ pip install yt-dlp librosa numpy matplotlib seaborn scikit-learn tqdm pydub
 3. Source separation - yields 2 files- vocals and no_vocals
 
 ```bash
+cd tools
 python youtube_to_stem.py "youtube_link" name
 ```
 
-then followed by start time and end time 
+Enter start and end time on entering
