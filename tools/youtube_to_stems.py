@@ -1,11 +1,11 @@
 from __future__ import unicode_literals
 import yt_dlp
-import ffmpeg
+import librosa
+import soundfile as sf
 import os
 import sys
 import subprocess
 import logging
-from pydub import AudioSegment
 from tqdm import tqdm
 import time
 
@@ -63,15 +63,17 @@ def download_from_url(url, name):
         logging.error(f"[ERROR] Download failed: {e}")
         sys.exit(1)
 
-# ---------- Step 2: Trim Audio ----------
+        # ---------- Step 2: Trim Audio ----------
 def trim_audio(input_path, start_sec, end_sec, name):
     try:
         logging.info("[2/3] Trimming audio...")
         with tqdm(total=100, desc="Trimming", ncols=80) as pbar:
-            audio = AudioSegment.from_wav(input_path)
-            trimmed = audio[start_sec * 1000:end_sec * 1000]
+            y, sr = librosa.load(input_path, sr=None)
+            start_sample = int(start_sec * sr)
+            end_sample = int(end_sec * sr)
+            trimmed = y[start_sample:end_sample]
             output_path = os.path.join("trimmed", f"{name}_trimmed.wav")
-            trimmed.export(output_path, format="wav")
+            sf.write(output_path, trimmed, sr)
             for _ in range(25):
                 time.sleep(0.01)
                 pbar.update(4)
@@ -84,42 +86,30 @@ def trim_audio(input_path, start_sec, end_sec, name):
 # ---------- Step 3: Run Demucs ----------
 def separate_audio(audio_path, name):
     try:
-        logging.info("[3/3] Running Demucs for source separation...")
-        with tqdm(total=100, desc="Separating", ncols=80) as pbar:
-            command = [
-                "demucs", audio_path,
-                "--out", "separated",
-                "--two-stems", "vocals"
-            ]
-            process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            for _ in range(50):
-                time.sleep(0.2)
-                pbar.update(2)
+        logging.info("[3/3] Running Demucs...")
+        subprocess.run(
+            ["demucs", audio_path, "--out", "separated", "--two-stems", "vocals"],
+            check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+        )
 
-            stdout, stderr = process.communicate()
+        model_dir = next(d for d in os.listdir("separated") if os.path.isdir(os.path.join("separated", d)) and d != "vocals" and d != "no_vocals")
+        base = os.path.splitext(os.path.basename(audio_path))[0]
+        out_dir = os.path.join("separated", model_dir, base)
 
-            if process.returncode != 0:
-                logging.error(f"[ERROR] Demucs failed:\n{stderr.decode()}")
-                sys.exit(1)
+        os.makedirs("separated/vocals", exist_ok=True)
+        os.makedirs("separated/no_vocals", exist_ok=True)
 
-        vocals_dir = os.path.join("separated", "vocals")
-        no_vocals_dir = os.path.join("separated", "no_vocals")
-        os.makedirs(vocals_dir, exist_ok=True)
-        os.makedirs(no_vocals_dir, exist_ok=True)
+        os.replace(os.path.join(out_dir, "vocals.wav"), f"separated/vocals/{name}_vocals.wav")
+        os.replace(os.path.join(out_dir, "no_vocals.wav"), f"separated/no_vocals/{name}_no_vocals.wav")
 
-        vocals_path = os.path.join(vocals_dir, os.path.splitext(os.path.basename(audio_path))[0], "vocals.wav")
-        no_vocals_path = os.path.join(no_vocals_dir, os.path.splitext(os.path.basename(audio_path))[0], "no_vocals.wav")
+        import shutil
+        shutil.rmtree(os.path.join("separated", model_dir))
 
-        if os.path.exists(vocals_path):
-            new_vocals_path = os.path.join(vocals_dir, f"{name}_vocals.wav")
-            os.replace(vocals_path, new_vocals_path)
-            logging.info(f"✅ Vocals: {new_vocals_path}")
-        if os.path.exists(no_vocals_path):
-            new_nv_path = os.path.join(no_vocals_dir, f"{name}_no_vocals.wav")
-            os.replace(no_vocals_path, new_nv_path)
-            logging.info(f"✅ Accompaniment: {new_nv_path}")
+        logging.info(f"✅ Saved: separated/vocals/{name}_vocals.wav")
+        logging.info(f"✅ Saved: separated/no_vocals/{name}_no_vocals.wav")
+
     except Exception as e:
-        logging.error(f"[ERROR] Demucs separation failed: {e}")
+        logging.error(f"[ERROR] Demucs failed: {e}")
         sys.exit(1)
 
 # ---------- Main ----------
