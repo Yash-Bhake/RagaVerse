@@ -19,8 +19,6 @@ under the tools folder-
 
 ## Requirements
 
-Ensure Python ≥3.8 is installed and added to PATH
-
 Mac OS
 
 1. install homebrew (if not already installed)
@@ -37,12 +35,16 @@ brew install ffmpeg
 ```bash
 git clone https://github.com/Yash-Bhake/RagaVerse.git
 ```
-4. create virtual environment 
+4. install python3.10 (if not present)
 ```bash
-python3 -m venv ragaverse_venv
+brew install python@3.10
+```
+5. create virtual environment 
+```bash
+python3.10 -m venv ragaverse_venv
 source ragaverse_venv/bin/activate
 ```
-5. install dependencies
+6. install dependencies
 ```bash 
 pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl
 ```
@@ -56,12 +58,13 @@ Windows
 ```bash
 git clone https://github.com/Yash-Bhake/RagaVerse.git
 ```
-5. create virtual environment (optional but recommended)
+5. install python 3.10 from https://www.python.org/downloads/release/python-3100/ and add it to your path (if not present)
+6. create virtual environment (optional but recommended)
 ```bash
-python -m venv ragaverse_venv
+python3.10 -m venv ragaverse_venv
 ragaverse_venv\Scripts\activate
 ```
-6. install dependencies
+7. install dependencies
 ```bash 
 pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl
 ```
