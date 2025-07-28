@@ -46,7 +46,7 @@ source ragaverse_venv/bin/activate
 ```
 6. install dependencies
 ```bash 
-pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl praat-parselmouth demucs
+pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl praat-parselmouth demucs ipywidgets djustText
 ```
 
 Windows
@@ -66,7 +66,7 @@ ragaverse_venv\Scripts\activate
 ```
 7. install dependencies
 ```bash 
-pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl praat-parselmouth demucs
+pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl praat-parselmouth demucs ipywidgets djustText
 ```
 
 ## CLI tool
@@ -80,4 +80,4 @@ cd tools
 python youtube_to_stem.py "youtube_link" name
 ```
 
-Enter start and end time on entering
+after entering this line, it will ask for start and end time, enter them and you are good to go.
