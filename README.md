@@ -4,6 +4,12 @@ This project enables the analysis and clustering of Indian classical ragas, and 
 
 ---
 
+## CLI tool
+
+1. Conversion of youtube video to .wav file
+2. Trimming audio - start time to end time
+3. Source separation - yields 2 files- vocals and no_vocals
+
 ##  Repository Structure for preprocessing
 
 under the tools folder- 
@@ -69,12 +75,7 @@ ragaverse_venv\Scripts\activate
 pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl praat-parselmouth demucs ipywidgets djustText
 ```
 
-## CLI tool
-
-1. Conversion of youtube video to .wav file
-2. Trimming audio - start time to end time
-3. Source separation - yields 2 files- vocals and no_vocals
-
+running the utility
 ```bash
 cd tools
 python youtube_to_stem.py "youtube_link" name
