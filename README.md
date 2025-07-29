@@ -10,7 +10,7 @@ This project enables the analysis and clustering of Indian classical ragas, and 
 2. Trimming audio - start time to end time
 3. Source separation - yields 2 files- vocals and no_vocals
 
-##  Repository Structure for preprocessing
+##  Repository Structure 
 
 under the tools folder- 
 
