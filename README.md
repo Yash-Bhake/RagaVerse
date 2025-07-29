@@ -4,7 +4,7 @@ This project enables the analysis and clustering of Indian classical ragas, and 
 
 ---
 
-## CLI tool
+## Utility for youtube video to source separated audio (with trimming)
 
 1. Conversion of youtube video to .wav file
 2. Trimming audio - start time to end time
