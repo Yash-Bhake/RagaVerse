@@ -82,3 +82,18 @@ python youtube_to_stem.py "youtube_link" name
 ```
 
 after entering this line, it will ask for start and end time, enter them and you are good to go.
+
+## Raga Clustering
+
+`demo2.ipynb` has the implementation
+
+The following steps are followed-
+
+1. All audios to be preprocessed till source separation
+2. Load the tonics for every audio from the database
+3. Generate Pitch contour
+4. Hertz to cents conversion
+5. Remove unwanted transition regions (errorneous drops, or artifacts in pitch contour)
+6. Copute pitch class distribution using gaussian weighting - soft binning
+7. Engineer more features
+8. PCA to 2d for visualising clusters.
