@@ -52,7 +52,7 @@ source ragaverse_venv/bin/activate
 ```
 6. install dependencies
 ```bash 
-pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl praat-parselmouth demucs ipywidgets djustText
+pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl praat-parselmouth demucs ipywidgets adjustText
 ```
 
 Windows
@@ -72,7 +72,7 @@ ragaverse_venv\Scripts\activate
 ```
 7. install dependencies
 ```bash 
-pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl praat-parselmouth demucs ipywidgets djustText
+pip install yt-dlp librosa ffmpeg-python soundfile numpy matplotlib seaborn scikit-learn tqdm openpyxl praat-parselmouth demucs ipywidgets adjustText
 ```
 
 running the utility
