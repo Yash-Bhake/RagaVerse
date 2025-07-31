@@ -97,3 +97,7 @@ The following steps are followed-
 6. Copute pitch class distribution using gaussian weighting - soft binning
 7. Engineer more features
 8. PCA to 2d for visualising clusters.
+
+## Contact
+
+For questions or contributions, please contact yashbhake1@gmail.com
